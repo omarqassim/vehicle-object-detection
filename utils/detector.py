@@ -6,22 +6,19 @@ from ultralytics import YOLO
 
 class YOLOModel:
     def __init__(self, model_path="model/best.pt", labels_path="model/labels.txt"):
-        """
-        Initialize the YOLO model.
-        Automatically detects if GPU (CUDA) is available.
-        Loads classes from labels.txt if available.
-        """
+
+        BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+        model_path = os.path.join(BASE_DIR, model_path)
+        labels_path = os.path.join(BASE_DIR, labels_path)
+
         self.device = 'cuda' if torch.cuda.is_available() else 'cpu'
-        
-        # We need absolute paths for robust deployment, but the prompt asked for relative paths.
-        # We will keep paths relative as requested, but we can resolve them relative to the current working directory.
+
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Model file not found at {model_path}")
-            
-        # Load YOLO model
+
         self.model = YOLO(model_path)
-        
-        # Load labels dynamically
+
         self.labels = self._load_labels(labels_path)
         
     def _load_labels(self, labels_path):
