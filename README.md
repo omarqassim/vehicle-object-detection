@@ -61,3 +61,4 @@ streamlit run streamlit_app.py
 - We use `opencv-python-headless` to avoid Qt/GUI library issues on servers.
 - The app gracefully falls back to CPU if a GPU is not available.
 "# vehicle-object-detection" 
+"# vehicle-object-detection" 
